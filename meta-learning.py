@@ -50,9 +50,10 @@ x_split = tf.split(x,[batch_size,batch_size,batch_size,batch_size,batch_size])
 with tf.variable_scope("xy"):
     input=x
     target=y
-    input=fc(input,12,'fc1')
-    input=fc(input,6,'fc2')
+    input=lrelu(fc(input,12,'fc1'))
+    input=lrelu(fc(input,6,'fc2'))
     output=fc(input,1,'fc3')
+
     l1_loss=tf.reduce_mean(tf.abs(output-target))
     optimizer_target = tf.train.RMSPropOptimizer(alpha, decay=0.95, momentum=0.9, epsilon=1e-8)
     optimizer_global = tf.train.RMSPropOptimizer(beta, decay=0.95, momentum=0.9, epsilon=1e-8)
