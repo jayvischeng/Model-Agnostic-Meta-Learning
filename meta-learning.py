@@ -32,10 +32,10 @@ for i in range(len(paras)):
 
 #####################################
 
-K=3
+K=7
 META=6
-alpha=0.001
-beta = alpha * 0.6 / META
+alpha=0.00015
+beta = alpha * 0.3 / META
 
 
 x = tf.placeholder(tf.float32, [None, 1] ,'x')
@@ -116,13 +116,14 @@ def forward_one_step():
 
     grads_dict = DealGradients(gradient_results)
     _ = sess.run(train_op_global,feed_dict=grads_dict)
-    print "step_loss: " + str(forward_loss)
+    return forward_loss
+    #print "step_loss: " + str(forward_loss)
 
 step=0
 while(True):
-
-    forward_one_step()
-    print "step " + str(step)
+    step +=1
+    loss = forward_one_step()
+    print "step " + str(step) + "  loss: " + str(loss)
 
 
 print "down..."
