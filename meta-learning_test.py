@@ -32,9 +32,9 @@ for i in range(len(paras)):
 
 #####################################
 
-K=5
+K=3
 META=6
-alpha=0.002
+alpha=0.001
 beta = alpha * 0.6 / META
 
 
@@ -96,6 +96,16 @@ def DealGradients(gradient_results):
 
 
 #####################################
+def fonward_one_steps():
+    gradient_results = []
+    data_feed = random.sample(data_list[0], batch_size)
+    x_feed, y_feed = zip(*data_feed)
+    loss, gradient_result = sess.run([l1_loss, gradient], feed_dict={x: x_feed, y: y_feed, is_training: True})
+    gradient_results.append(gradient_result)
+    grads_dict = DealGradients(gradient_results)
+
+    _ = sess.run(train_op_global, feed_dict=grads_dict)
+    print loss
 
 def forward_one_step():
     gradient_results = []
@@ -120,9 +130,8 @@ def forward_one_step():
 
 step=0
 while(True):
-
-    forward_one_step()
-    print "step " + str(step)
+    fonward_one_steps()
+    #print "step " + str(step)
 
 
 print "down..."

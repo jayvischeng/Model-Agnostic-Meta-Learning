@@ -32,9 +32,9 @@ for i in range(len(paras)):
 
 #####################################
 
-K=5
+K=3
 META=6
-alpha=0.002
+alpha=0.001
 beta = alpha * 0.6 / META
 
 
