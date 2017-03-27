@@ -19,6 +19,12 @@ class timer:
             print("delta-time: " + str(delta_sec) + " s")
         return delta_sec
 
+def copy_paras(frm, to, sess):
+    list = []
+    for i in range(len(frm)):
+        ass = to[i].assign(frm[i])
+        list.append(ass)
+    sess.run(list)
 
 def vars(name, shape, initializer, GPU=False):
     if(os.path.exists('~/gpu')):
@@ -105,10 +111,10 @@ def conv(inputs, kernel_size, stride, num_features, scope='conv'):
                                              initializer= tf.truncated_normal_initializer(stddev=0.1))
 
         biases_init = vars('init_biases', [num_features], tf.constant_initializer(0.01))
-        weights_copy = vars('weights', shape=[kernel_size, kernel_size, input_channels, num_features],
+        weights_copy = vars('copy_weights', shape=[kernel_size, kernel_size, input_channels, num_features],
                        initializer=tf.truncated_normal_initializer(stddev=0.1))
 
-        biases_copy = vars('biases', [num_features], tf.constant_initializer(0.01))
+        biases_copy = vars('copy_biases', [num_features], tf.constant_initializer(0.01))
 
 
         conv = tf.nn.conv2d(inputs, weights_init, strides=[1, stride, stride, 1], padding='SAME')
